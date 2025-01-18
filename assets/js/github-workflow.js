@@ -1,4 +1,3 @@
-
 console.log("Hello from GitHub Workflow!");
 
 const mappings = [
@@ -12,11 +11,9 @@ const mappings = [
   }
 ];
 
-
 // Iterate over each mapping and set up event listeners
 mappings.forEach(mapping => {
   const inputElement = document.getElementById(mapping.inputId);
-  console.log(inputElement);
 
   if (inputElement) {
     inputElement.addEventListener("input", function () {
@@ -24,20 +21,21 @@ mappings.forEach(mapping => {
 
       console.log(`Input value: ${inputValue}`);
 
-      // Find the element containing the target text
-      const codeElement = document.querySelector(
+      // Find all elements containing the target text
+      const codeElements = document.querySelectorAll(
         `.language-bash .highlight code`
       );
 
-      console.log("Code element: ", codeElement);
+      codeElements.forEach(codeElement => {
 
-      if (codeElement) {
-        // Update the target text with the input value
-        codeElement.innerHTML = codeElement.innerHTML.replace(
-          new RegExp(mapping.targetText, "g"),
-          inputValue || mapping.targetText
-        );
-      }
+        if (codeElement) {
+          // Replace all occurrences of the target text in the current element
+          codeElement.innerHTML = codeElement.innerHTML.replace(
+            new RegExp(mapping.targetText, "g"),
+            inputValue || mapping.targetText
+          );
+        }
+      });
     });
   }
 });
