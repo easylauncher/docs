@@ -8,6 +8,18 @@ const mappings = [
   {
     inputId: "base_branch_name",
     targetText: "&lt;base_branch_name&gt;"
+  },
+  {
+    inputId: "user_name",
+    targetText: "&lt;user_name&gt;"
+  },
+  {
+    inputId: "user_email",
+    targetText: "&lt;user_email&gt;"
+  },
+  {
+    inputId: "feature_name",
+    targetText: "&lt;feature_name&gt;"
   }
 ];
 
