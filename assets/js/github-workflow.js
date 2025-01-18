@@ -27,14 +27,24 @@ mappings.forEach(mapping => {
       );
 
       codeElements.forEach(codeElement => {
+        console.log("Code element: ", codeElement);
 
-        if (codeElement) {
-          // Replace all occurrences of the target text in the current element
-          codeElement.innerHTML = codeElement.innerHTML.replace(
-            new RegExp(mapping.targetText, "g"),
-            inputValue || mapping.targetText
-          );
+        // Retrieve the original text from the data attribute
+        const originalText = codeElement.dataset.originalText || codeElement.innerHTML;
+
+        // Save the original text if not already stored
+        if (!codeElement.dataset.originalText) {
+          codeElement.dataset.originalText = originalText;
         }
+
+        // Replace the target text in the original template
+        const updatedText = originalText.replace(
+          new RegExp(mapping.targetText, "g"),
+          inputValue || mapping.targetText
+        );
+
+        // Update the code block's inner HTML
+        codeElement.innerHTML = updatedText;
       });
     });
   }
