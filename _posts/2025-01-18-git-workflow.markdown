@@ -16,14 +16,14 @@ So the master branch always has the changes ready for production.
 <form id="project_input">
   <label for="base_branch_name">Base Branch Name:</label>
   <input type="text" id="base_branch_name" name="base_branch_name" placeholder="Enter base branch name">
-  <label for="user-name">Your Name:</label>
-  <input type="text" id="user-name" name="user-name" placeholder="Enter your name">
-  <label for="user-email">Your Email:</label>
-  <input type="text" id="user-email" name="user-email" placeholder="Enter your email">
-  <label for="repo-url">Repo URL:</label>
+  <label for="user_name">Your Name:</label>
+  <input type="text" id="user_name" name="user_name" placeholder="Enter your name">
+  <label for="user_email">Your Email:</label>
+  <input type="text" id="user_email" name="user_email" placeholder="Enter your email">
+  <label for="repo_url">Repo URL:</label>
   <input type="text" id="repo_url" name="repo_url" placeholder="Enter repo url">
-  <label for="feature-name">Feature Name:</label>
-  <input type="text" id="feature-name" name="feature-name" placeholder="Enter feature name">
+  <label for="feature_name">Feature Name:</label>
+  <input type="text" id="feature_name" name="feature_name" placeholder="Enter feature name">
 </form>
 
 
@@ -44,13 +44,13 @@ cd <project_dir>
 - Set your name current git repo
 
 ```bash
-git config user.name "<your name>"
+git config user.name "<user_name>"
 ```
 
 - Set you email globally for git
 
 ```bash
-git config user.email "<your email>"
+git config user.email "<user_email>"
 ```
  
 
@@ -66,7 +66,7 @@ git pull origin <base_branch_name>
 ```
 1. Create a new branch from main (Make the branch name relevant to feature and fix we are working) 
 ```bash
-git checkout -b <new_feature_branch_name>
+git checkout -b <feature_name>
 ```
 1. Make local changes, Modify the files which you want to. (Do your coding and all) 
 1. Add files to git 
@@ -75,7 +75,7 @@ git add <file1> <file2> <file3> ...
 ```
 1. Commit changes to local 
 ```bash
-git commit -m '<commit message>'
+git commit -m '<feature_name>'
 ```
 1. Update master branch of the repo with latest remote changes 
 ```bash
@@ -84,15 +84,15 @@ git pull origin <base_branch_name>
 ```
 1. Switch back to working branch
 ```bash
-git checkout <new_feature_branch_name> 
+git checkout <feature_name> 
 ```
 1. Rebase with master and resolve conflict if any 
 ```bash
-git rebase master
+git rebase <base_branch_name>
 ```
 1. Push changes to new branch on remote 
 ```bash
-git push origin <new_feature_branch_name>
+git push origin <feature_name>
 ```
 
 ## Create a Pull/Merge request:
