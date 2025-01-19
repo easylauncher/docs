@@ -22,42 +22,57 @@ const mappings = [
     targetText: "&lt;feature_name&gt;"
   }
 ];
+// 1. Define mappings for each placeholder
 
-// Iterate over each mapping and set up event listeners
-mappings.forEach(mapping => {
+
+// 2. Keep a global object of all current placeholder values
+const mappingValues = {
+  repo_url: "",
+  base_branch_name: ""
+};
+
+// 3. Identify all code elements and store original text in data-original-text
+const codeElements = document.querySelectorAll(".language-bash .highlight code");
+codeElements.forEach((codeElement) => {
+  // Store original text only once
+  if (!codeElement.dataset.originalText) {
+    codeElement.dataset.originalText = codeElement.innerHTML;
+  }
+});
+
+// 4. Function to re-apply *all* placeholders for *all* code elements
+function reapplyPlaceholders() {
+  codeElements.forEach((codeElement) => {
+    // Start from the original text each time
+    let updatedHTML = codeElement.dataset.originalText;
+
+    // Replace each mapping with its current value
+    mappings.forEach((mapping) => {
+      const currentValue = mappingValues[mapping.inputId];
+      updatedHTML = updatedHTML.replace(
+        new RegExp(mapping.targetText, "g"),
+        currentValue || mapping.targetText
+      );
+    });
+
+    // Update the code element
+    codeElement.innerHTML = updatedHTML;
+  });
+}
+
+// 5. For each mapping, update the global mappingValues and re-apply
+mappings.forEach((mapping) => {
   const inputElement = document.getElementById(mapping.inputId);
 
   if (inputElement) {
     inputElement.addEventListener("input", function () {
-      const inputValue = this.value;
+      // Store the new value in our global object
+      mappingValues[mapping.inputId] = this.value;
 
-      console.log(`Input value: ${inputValue}`);
+      console.log(`Updated ${mapping.inputId} to: ${this.value}`);
 
-      // Find all elements containing the target text
-      const codeElements = document.querySelectorAll(
-        `.language-bash .highlight code`
-      );
-
-      codeElements.forEach(codeElement => {
-        console.log("Code element: ", codeElement);
-
-        // Retrieve the original text from the data attribute
-        const originalText = codeElement.dataset.originalText || codeElement.innerHTML;
-
-        // Save the original text if not already stored
-        if (!codeElement.dataset.originalText) {
-          codeElement.dataset.originalText = originalText;
-        }
-
-        // Replace the target text in the original template
-        const updatedText = originalText.replace(
-          new RegExp(mapping.targetText, "g"),
-          inputValue || mapping.targetText
-        );
-
-        // Update the code block's inner HTML
-        codeElement.innerHTML = updatedText;
-      });
+      // Re-apply all placeholders to all code elements
+      reapplyPlaceholders();
     });
   }
 });
